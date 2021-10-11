@@ -4,14 +4,10 @@ let PRODUCTS_DATA = [
   { id: 3, title: "Charli XCX - Sucker CD", price: 19.99 },
 ];
 
-// async function retrieveProducts() {
-//   return new Promise((resolve) => {
-//     setTimeout(() => resolve(PRODUCTS_DATA), 100);
-//   });
-// }
-
-function retrieveProducts() {
-  return PRODUCTS_DATA;
+async function retrieveProducts() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(PRODUCTS_DATA), 100);
+  });
 }
 
 export { retrieveProducts };
