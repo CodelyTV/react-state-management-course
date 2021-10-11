@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { checkout } from "./actions";
 
 import ShoppingCart from "./components/ShoppingCart";
 
@@ -16,6 +17,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { onCheckoutClicked: checkout })(
   ShoppingCart
 );

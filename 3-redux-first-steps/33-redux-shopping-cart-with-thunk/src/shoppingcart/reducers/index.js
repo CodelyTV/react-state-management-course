@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../constants";
+import { ADD_TO_CART, CHECKOUT_SUCCESS } from "../constants";
 
 const initialState = {
   products: {},
@@ -20,6 +20,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         products: { ...state.products, [action.product.id]: quantity },
       };
+
+    case CHECKOUT_SUCCESS:
+      return { products: {} }
     default:
       return state;
   }
