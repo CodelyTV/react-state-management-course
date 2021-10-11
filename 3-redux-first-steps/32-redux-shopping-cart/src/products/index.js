@@ -1,8 +1,16 @@
+import { connect } from "react-redux";
+import { addToCart } from "./actions";
 import ProductList from "./components/ProductList";
 
 
-const ProductListWrapper = () => {
-  return <ProductList products={[]} onAddToCartClicked={() => { }} />
-}
+const mapStateToProps = (state) => {
+  const products = Object.values(state.products);
 
-export default ProductListWrapper;
+  return {
+    products,
+  };
+};
+
+export default connect(mapStateToProps, { onAddToCartClicked: addToCart })(
+  ProductList
+);
