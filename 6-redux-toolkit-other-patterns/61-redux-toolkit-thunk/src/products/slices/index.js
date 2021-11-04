@@ -1,14 +1,22 @@
 import { retrieveProducts } from "../repositories/ProductsRepository";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+export const listProducts = createAsyncThunk(
+  "products/listProducts",
+  async () => {
+    return await retrieveProducts();
+  }
+);
+
 
 export const productsSlice = createSlice({
   name: "products",
   initialState: {},
-  reducers: {
-    receiveProducts: (state, action) => {
+  reducers: {},
+  extraReducers: {
+    [listProducts.fulfilled]: (state, action) => {
       const products = action.payload;
-
       return products.reduce((result, product) => {
         result[product.id] = product;
         return result;
@@ -16,13 +24,5 @@ export const productsSlice = createSlice({
     },
   },
 });
-
-export const { receiveProducts } = productsSlice.actions;
-
-export const listProducts = () => async (dispatch) => {
-  const products = await retrieveProducts();
-
-  dispatch(receiveProducts(products));
-};
 
 export default productsSlice.reducer;
