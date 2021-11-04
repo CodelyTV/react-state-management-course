@@ -1,20 +1,21 @@
-import { connect } from "react-redux";
-import { addToCart } from "../shoppingcart/slices";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import ProductList from "./components/ProductList";
+import { addToCart } from "../shoppingcart/slices";
 
-import { createSelector } from "reselect";
+const Component = () => {
+  const products = useSelector((state) => Object.values(state.products));
+  const dispatch = useDispatch();
 
-const selectProducts = (state) => state.products;
-const productsResult = (products) => Object.values(products);
-
-const retrieveProducts = createSelector(selectProducts, productsResult);
-
-const mapStateToProps = (state) => {
-  return {
-    products: retrieveProducts(state),
-  };
+  return (
+    <ProductList
+      products={products}
+      onAddToCartClicked={(data) => {
+        dispatch(addToCart(data));
+      }}
+    />
+  );
 };
 
-export default connect(mapStateToProps, { onAddToCartClicked: addToCart })(
-  ProductList
-);
+export default Component;
