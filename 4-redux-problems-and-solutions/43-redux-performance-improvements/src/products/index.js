@@ -2,12 +2,16 @@ import { connect } from "react-redux";
 import { addToCart } from "./actions";
 import ProductList from "./components/ProductList";
 
+import { createSelector } from "reselect";
+
+const selectProducts = (state) => state.products;
+const productsResult = (products) => Object.values(products);
+
+const retrieveProducts = createSelector(selectProducts, productsResult);
 
 const mapStateToProps = (state) => {
-  const products = Object.values(state.products);
-
   return {
-    products,
+    products: retrieveProducts(state),
   };
 };
 
