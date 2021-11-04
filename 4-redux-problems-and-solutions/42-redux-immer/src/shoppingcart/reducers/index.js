@@ -1,31 +1,21 @@
+import produce from "immer";
+
 import { ADD_TO_CART, CHECKOUT_SUCCESS } from "../constants";
 
 const initialState = {
   products: {},
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_TO_CART:
-      const productId = action.product.id;
-      let quantity = 0;
+const reducer = produce((draft = initialState, action) => {
+  const { type, product } = action;
 
-      if (state.products[productId]) {
-        quantity = state.products[productId];
-      }
-
-      quantity++;
-
-      return {
-        ...state,
-        products: { ...state.products, [action.product.id]: quantity },
-      };
-
-    case CHECKOUT_SUCCESS:
-      return { products: {} }
-    default:
-      return state;
+  if (type === ADD_TO_CART) {
+    draft.products[product.id] = ++draft.products[product.id] || 1;
+  } else if(type === CHECKOUT_SUCCESS) {
+    draft.products = {};
   }
-};
+
+  return draft;
+});
 
 export default reducer;

@@ -9,10 +9,7 @@ const mapStateToProps = (state) => {
 
   return {
     products: productsOnCard.map(([key, value]) => {
-      const product = products[key];
-      product.quantity = value;
-
-      return product;
+      return { ...products[key], quantity: value };
     }),
   };
 };
