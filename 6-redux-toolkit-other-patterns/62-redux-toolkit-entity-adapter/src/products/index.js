@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ProductList from "./components/ProductList";
 import { addToCart } from "../shoppingcart/slices";
+import { selectAll } from "./slices";
 
 const Component = () => {
-  const products = useSelector((state) => Object.values(state.products));
+  const products = useSelector(selectAll);
   const dispatch = useDispatch();
 
   return (

@@ -1,17 +1,26 @@
 import { buyProducts } from "../repositories/CartRepository";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+
+const shoppingcartAdapter = createEntityAdapter();
 
 export const shoppingCartSlice = createSlice({
   name: "shoppingcart",
-  initialState: { products: {} },
+  initialState: shoppingcartAdapter.getInitialState(),
   reducers: {
     addToCart: (state, action) => {
-      state.products[action.payload.id] = ++state.products[action.payload.id] || 1;
+      let product = state.entities[action.payload.id] || {
+        ...action.payload,
+        quantity: 0,
+      };
+
+      product.quantity++;
+
+      shoppingcartAdapter.upsertOne(state, product);
     },
     checkoutStart: (state, action) => { },
     checkoutSucceded: (state, action) => {
-      state.products = {}
+      shoppingcartAdapter.removeAll(state);
     },
   },
 });
@@ -21,6 +30,10 @@ export const {
   checkoutSucceded,
   addToCart,
 } = shoppingCartSlice.actions;
+
+export const { selectAll } = shoppingcartAdapter.getSelectors(
+  (state) => state.shoppingcart
+);
 
 export const checkout = (products) => async (dispatch, getState) => {
   const { shoppingcart } = getState();
