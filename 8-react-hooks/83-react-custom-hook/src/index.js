@@ -1,37 +1,15 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React from "react";
 import { render } from "react-dom";
 
 import Products from "./products";
 import ShoppingCart from "./shoppingcart";
 
-import { retrieveProducts } from "./products/repositories/ProductsRepository";
-import { actions, reducer } from "./reducer";
+import { useProducts } from "./products/useProdutcs";
+import { useShoppingCart } from "./shoppingcart/useShoppingCart";
 
 const App = () => {
-  const [products, setProducts] = useState({});
-  const [shoppingcart, dispatch] = useReducer(reducer, {});
-
-  useEffect(() => {
-    retrieveProducts().then((products) => {
-      setProducts(
-        products.reduce((result, product) => {
-          result[product.id] = product;
-          return result;
-        }, {})
-      );
-    });
-  }, []);
-
-  const { addToCart, checkout } = actions(dispatch);
-
-  const productsOnCart = () => {
-    return Object.entries(shoppingcart).map(([key, value]) => {
-      const product = products[key];
-      product.quantity = value;
-
-      return product;
-    });
-  }
+  const { products } = useProducts();
+  const { addToCart, checkout, productsOnCart } = useShoppingCart(products);
 
   return (
     <>
