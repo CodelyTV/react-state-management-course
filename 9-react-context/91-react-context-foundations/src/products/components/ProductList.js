@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { ProductsContext } from "../../productsContext";
 
 
@@ -30,17 +29,6 @@ const ProductList = () => {
       )}
     </ProductsContext.Consumer>
   );
-};
-
-ProductList.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  onAddToCartClicked: PropTypes.func,
 };
 
 export default ProductList;

@@ -49,9 +49,5 @@ const ShoppingCart = () => {
   );
 };
 
-ShoppingCart.propTypes = {
-  products: PropTypes.array,
-  onCheckoutClicked: PropTypes.func,
-};
 
 export default ShoppingCart;
