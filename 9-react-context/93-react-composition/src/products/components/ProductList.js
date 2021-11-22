@@ -1,6 +1,5 @@
 import React from "react";
 import { useProductsContext } from "../../productsContext";
-import { UserInfo } from "../../UserInfo";
 
 
 const Product = ({ product, onAddToCartClicked }) => {
@@ -17,13 +16,13 @@ const Product = ({ product, onAddToCartClicked }) => {
   );
 };
 
-const ProductList = ({ user }) => {
+const ProductList = ({ children }) => {
   const { products, addToCart } = useProductsContext();
   return (
     <>
       <h3>Products</h3>
 
-      <UserInfo user={user} />
+      {children}
 
       {Object.values(products).map((product) => (
         <Product key={product.id} product={product} onAddToCartClicked={addToCart} />

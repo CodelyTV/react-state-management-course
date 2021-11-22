@@ -7,6 +7,7 @@ import ShoppingCart from "./shoppingcart";
 import { useProducts } from "./products/useProdutcs";
 import { useShoppingCart } from "./shoppingcart/useShoppingCart";
 import { ProductsContext } from "./productsContext";
+import { UserInfo } from "./UserInfo";
 
 const App = () => {
   const { products } = useProducts();
@@ -14,7 +15,9 @@ const App = () => {
 
   return (
     <ProductsContext.Provider value={{ products, addToCart, checkout, productsOnCart }} >
-      <Products user={"Isma Navarro"} />
+      <Products>
+        <UserInfo user={"Isma Navarro"} />
+      </Products>
       <ShoppingCart />
     </ProductsContext.Provider >
   );
