@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ProductsContext } from "../../productsContext";
 
 
 const Product = ({ title, price, quantity }) => (
@@ -15,30 +16,36 @@ function computeTotal(products) {
   }, 0);
 }
 
-const ShoppingCart = ({ products, onCheckoutClicked }) => {
-  const isEmpty = products.length === 0;
-
+const ShoppingCart = () => {
   return (
-    <div>
-      <h3>Shopping Cart</h3>
+    <ProductsContext.Consumer>
+      {({ productsOnCart, checkout }) => {
+        const isEmpty = productsOnCart.length === 0;
 
-      <div>
-        {isEmpty ? <em>Please add some products to cart.</em> : ""}
+        return (
+          <div>
+            <h3>Shopping Cart</h3>
 
-        {products.map((product) => (
-          <Product key={product.id} {...product} />
-        ))}
-      </div>
+            <div>
+              {isEmpty ? <em>Please add some products to cart.</em> : ""}
 
-      <p>Total: {computeTotal(products)} €</p>
+              {productsOnCart.map((product) => (
+                <Product key={product.id} {...product} />
+              ))}
+            </div>
 
-      <button
-        onClick={() => onCheckoutClicked(products)}
-        disabled={isEmpty ?? "disabled"}
-      >
-        Checkout
-      </button>
-    </div>
+            <p>Total: {computeTotal(productsOnCart)} €</p>
+
+            <button
+              onClick={() => checkout(productsOnCart)}
+              disabled={isEmpty ?? "disabled"}
+            >
+              Checkout
+            </button>
+          </div>
+        );
+      }}
+    </ProductsContext.Consumer>
   );
 };
 

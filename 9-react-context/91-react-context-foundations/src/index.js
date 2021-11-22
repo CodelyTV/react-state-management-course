@@ -6,16 +6,17 @@ import ShoppingCart from "./shoppingcart";
 
 import { useProducts } from "./products/useProdutcs";
 import { useShoppingCart } from "./shoppingcart/useShoppingCart";
+import { ProductsContext } from "./productsContext";
 
 const App = () => {
   const { products } = useProducts();
   const { addToCart, checkout, productsOnCart } = useShoppingCart(products);
 
   return (
-    <>
-      <Products products={products} onAddToCartClicked={addToCart} />
-      <ShoppingCart products={productsOnCart} onCheckoutClicked={checkout} />
-    </>
+    <ProductsContext.Provider value={{ products, addToCart, checkout, productsOnCart }} >
+      <Products />
+      <ShoppingCart />
+    </ProductsContext.Provider >
   );
 };
 

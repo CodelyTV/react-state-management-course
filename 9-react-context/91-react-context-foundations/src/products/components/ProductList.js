@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ProductsContext } from "../../productsContext";
 
 
-const Product = ({ product, onAddToCartClicked  }) => {
+const Product = ({ product, onAddToCartClicked }) => {
 
   return (
     <div style={{ marginBottom: 20 }}>
@@ -11,19 +12,23 @@ const Product = ({ product, onAddToCartClicked  }) => {
         {product.inventory ? ` x ${product.inventory}` : null}
       </div>
 
-      <button onClick={() => onAddToCartClicked (product)}>Add to cart</button>
+      <button onClick={() => onAddToCartClicked(product)}>Add to cart</button>
     </div>
   );
 };
 
-const ProductList = ({ products, onAddToCartClicked }) => {
+const ProductList = () => {
   return (
-    <div>
-      <h3>Products</h3>
-      {Object.values(products).map((product) => (
-        <Product key={product.id} product={product} onAddToCartClicked={onAddToCartClicked} />
-      ))}
-    </div>
+    <ProductsContext.Consumer>
+      {({ products, addToCart }) => (
+        <>
+          <h3>Products</h3>
+          {Object.values(products).map((product) => (
+            <Product key={product.id} product={product} onAddToCartClicked={addToCart} />
+          ))}
+        </>
+      )}
+    </ProductsContext.Consumer>
   );
 };
 
