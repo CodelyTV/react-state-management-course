@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { ProductsContext } from "../../productsContext";
+import { useProductsContext } from "../../productsContext";
 
 
 const Product = ({ title, price, quantity }) => (
@@ -17,35 +16,30 @@ function computeTotal(products) {
 }
 
 const ShoppingCart = () => {
+  const { productsOnCart, checkout } = useProductsContext();
+  const isEmpty = productsOnCart.length === 0;
+
   return (
-    <ProductsContext.Consumer>
-      {({ productsOnCart, checkout }) => {
-        const isEmpty = productsOnCart.length === 0;
+    <div>
+      <h3>Shopping Cart</h3>
 
-        return (
-          <div>
-            <h3>Shopping Cart</h3>
+      <div>
+        {isEmpty ? <em>Please add some products to cart.</em> : ""}
 
-            <div>
-              {isEmpty ? <em>Please add some products to cart.</em> : ""}
+        {productsOnCart.map((product) => (
+          <Product key={product.id} {...product} />
+        ))}
+      </div>
 
-              {productsOnCart.map((product) => (
-                <Product key={product.id} {...product} />
-              ))}
-            </div>
+      <p>Total: {computeTotal(productsOnCart)} €</p>
 
-            <p>Total: {computeTotal(productsOnCart)} €</p>
-
-            <button
-              onClick={() => checkout(productsOnCart)}
-              disabled={isEmpty ?? "disabled"}
-            >
-              Checkout
-            </button>
-          </div>
-        );
-      }}
-    </ProductsContext.Consumer>
+      <button
+        onClick={() => checkout(productsOnCart)}
+        disabled={isEmpty ?? "disabled"}
+      >
+        Checkout
+      </button>
+    </div>
   );
 };
 

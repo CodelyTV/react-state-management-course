@@ -1,5 +1,10 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
+
+const useProductsContext = () => {
+  const products = useContext(ProductsContext);
+  return products;
+}
 
 const ProductsContext = createContext();
 
-export { ProductsContext };
+export { ProductsContext, useProductsContext };

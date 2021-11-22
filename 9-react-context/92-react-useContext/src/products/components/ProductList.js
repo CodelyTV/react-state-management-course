@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductsContext } from "../../productsContext";
+import { useProductsContext } from "../../productsContext";
 
 
 const Product = ({ product, onAddToCartClicked }) => {
@@ -17,17 +17,14 @@ const Product = ({ product, onAddToCartClicked }) => {
 };
 
 const ProductList = () => {
+  const { products, addToCart } = useProductsContext();
   return (
-    <ProductsContext.Consumer>
-      {({ products, addToCart }) => (
-        <>
-          <h3>Products</h3>
-          {Object.values(products).map((product) => (
-            <Product key={product.id} product={product} onAddToCartClicked={addToCart} />
-          ))}
-        </>
-      )}
-    </ProductsContext.Consumer>
+    <>
+      <h3>Products</h3>
+      {Object.values(products).map((product) => (
+        <Product key={product.id} product={product} onAddToCartClicked={addToCart} />
+      ))}
+    </>
   );
 };
 
