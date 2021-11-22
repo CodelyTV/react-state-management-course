@@ -2,13 +2,14 @@ import React from "react";
 import { render } from "react-dom";
 
 import { retrieveData } from "./repositories/DataRepository";
+import { useQuery } from "./useQuery";
 
 const App = () => {
-  const [data, setData] = React.useState([]);
+  const { data, isLoading } = useQuery(retrieveData);
 
-  React.useEffect(() => {
-    retrieveData().then(setData);
-  }, []);
+  if (isLoading) {
+    return <span>Loading...</span>
+  }
 
   return (
     <>
