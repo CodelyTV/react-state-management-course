@@ -6,11 +6,13 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@xstate/react": "^1.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.33.4",
     "react-scripts": "4.0.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "xstate": "^4.26.1"
   },
   "scripts": {
     "start": "react-scripts start",
