@@ -5,6 +5,7 @@ let PRODUCTS_DATA = [
 ];
 
 async function retrieveProducts() {
+  console.log("Retrieve products");
   return new Promise((resolve) => {
     setTimeout(() => resolve(PRODUCTS_DATA), 100);
   });

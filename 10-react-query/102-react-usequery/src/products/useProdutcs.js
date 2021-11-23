@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { retrieveProducts } from "./repositories/ProductsRepository";
 
 export const useProducts = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    retrieveProducts().then(setProducts);
-  }, []);
+  const { data } = useQuery("products", retrieveProducts, {
+    placeholderData: [],
+  });
 
   return {
-    products
+    products: data
   }
 }

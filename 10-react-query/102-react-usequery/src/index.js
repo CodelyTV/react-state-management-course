@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import Products from "./products";
 import ShoppingCart from "./shoppingcart";
@@ -7,6 +8,8 @@ import ShoppingCart from "./shoppingcart";
 import { useProducts } from "./products/useProdutcs";
 import { useShoppingCart } from "./shoppingcart/useShoppingCart";
 import { ProductsContext } from "./productsContext";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const { products } = useProducts();
@@ -20,4 +23,9 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>
+  , document.getElementById("root")
+);
