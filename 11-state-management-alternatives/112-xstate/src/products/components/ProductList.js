@@ -1,21 +1,7 @@
 import React from "react";
-import { createMachine, assign } from "xstate";
-import { useMachine } from "@xstate/react";
 
 import { useProductsContext } from "../../productsContext";
-
-const toggleMachine = createMachine({
-  id: "toggle",
-  initial: "active",
-  states: {
-    inactive: {
-      on: { TOGGLE: "active" }
-    },
-    active: {
-      on: { TOGGLE: "inactive" }
-    }
-  }
-});
+import { useToggle } from "../../useToggle";
 
 const Product = ({ product, onAddToCartClicked }) => {
 
@@ -33,13 +19,11 @@ const Product = ({ product, onAddToCartClicked }) => {
 
 const ProductList = () => {
   const { products, addToCart } = useProductsContext();
-
-  const [current, send] = useMachine(toggleMachine);
-  const active = current.matches("active");
+  const { active, toggle } = useToggle();
 
   return (
     <>
-      <button onClick={() => send("TOGGLE")}>Hidde Product List</button>
+      <button onClick={toggle}>Hidde Product List</button>
 
       <h3>Products</h3>
       {active && products.map((product) => (
