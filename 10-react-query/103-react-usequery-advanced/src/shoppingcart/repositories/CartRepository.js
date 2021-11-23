@@ -1,6 +1,8 @@
 async function buyProducts(products) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), 200);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("Purchase error");
+    }, 200);
   });
 }
 

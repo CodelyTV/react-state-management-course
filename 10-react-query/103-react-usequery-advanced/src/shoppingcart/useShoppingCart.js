@@ -19,11 +19,14 @@ export const useShoppingCart = (products) => {
     });
   }
 
-  const { addToCart, checkout } = actions(dispatch);
+  const { addToCart, checkout, setCart } = actions(dispatch);
 
   const checkoutAction = useMutation(buyProducts, {
-    onSuccess: () => {
+    onMutate: () => {
       checkout();
+    },
+    onError: (err, products) => {
+      setCart(products);
     },
     onSettled: async () => {
       await queryClient.invalidateQueries("products");
