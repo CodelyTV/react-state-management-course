@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { actions, reducer } from "./reducer";
 import { buyProducts } from "./repositories/CartRepository";
@@ -21,15 +21,20 @@ export const useShoppingCart = (products) => {
 
   const { addToCart, checkout } = actions(dispatch);
 
-  const checkoutAction = async () => {
-    await buyProducts(shoppingcart);
-    checkout();
-    await queryClient.invalidateQueries("products");
-  }
+  const checkoutAction = useMutation(buyProducts, {
+    onSuccess: () => {
+      checkout();
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries("products");
+    }
+  });
+
+
 
   return {
     productsOnCart: productsOnCart(),
     addToCart,
-    checkout: checkoutAction
+    checkout: () => checkoutAction.mutate(shoppingcart)
   }
 };
