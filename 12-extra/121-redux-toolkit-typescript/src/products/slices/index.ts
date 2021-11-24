@@ -1,8 +1,10 @@
 import { retrieveProducts } from "../repositories/ProductsRepository";
 
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Product } from "../product";
+import { RootState } from "../../config/store";
 
-const productsAdapter = createEntityAdapter();
+const productsAdapter = createEntityAdapter<Product>();
 
 export const listProducts = createAsyncThunk(
   "products/listProducts",
@@ -16,13 +18,13 @@ export const productsSlice = createSlice({
   initialState: productsAdapter.getInitialState(),
   reducers: {},
   extraReducers: {
-    [listProducts.fulfilled]: (state, action) => {
+    [listProducts.fulfilled.toString()]: (state, action: PayloadAction<Product[]>) => {
       productsAdapter.setAll(state, action.payload);
     },
   },
 });
 
-export const { selectAll } = productsAdapter.getSelectors(
+export const { selectAll } = productsAdapter.getSelectors<RootState>(
   (state) => state.products
 );
 

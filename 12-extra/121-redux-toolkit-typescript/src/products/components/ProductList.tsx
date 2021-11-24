@@ -1,7 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { Product } from "../product";
 
-const Product = ({ data, onAddToCartClicked }) => (
+const ProductItem = ({ data, onAddToCartClicked }: {data: Product, onAddToCartClicked: (product: Product) => void}) => (
   <div style={{ marginBottom: 20 }}>
     <div>
       {data.title} - {data.price} €
@@ -12,13 +11,13 @@ const Product = ({ data, onAddToCartClicked }) => (
   </div>
 );
 
-const ProductList = ({ products, onAddToCartClicked }) => {
+const ProductList = ({ products, onAddToCartClicked }: {products: Product[], onAddToCartClicked: (product: Product) => void}) => {
   
   return (
     <div>
       <h3>Products</h3>
       {products.map((product) => (
-        <Product
+        <ProductItem
           key={product.id}
           data={product}
           onAddToCartClicked={(data) => {
@@ -28,17 +27,6 @@ const ProductList = ({ products, onAddToCartClicked }) => {
       ))}
     </div>
   );
-};
-
-ProductList.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  onAddToCartClicked: PropTypes.func.isRequired,
 };
 
 export default ProductList;
