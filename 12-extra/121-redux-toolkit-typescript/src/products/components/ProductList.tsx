@@ -4,7 +4,6 @@ const ProductItem = ({ data, onAddToCartClicked }: {data: Product, onAddToCartCl
   <div style={{ marginBottom: 20 }}>
     <div>
       {data.title} - {data.price} €
-      {data.inventory ? ` x ${data.inventory}` : null}
     </div>
 
     <button onClick={() => onAddToCartClicked(data)}>Add to cart</button>
