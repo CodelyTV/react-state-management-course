@@ -1,8 +1,10 @@
 import { buyProducts } from "../repositories/CartRepository";
 
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { CartProduct } from "../cartProduct";
+import { AppThunk, RootState } from "../../config/store";
 
-const shoppingcartAdapter = createEntityAdapter();
+const shoppingcartAdapter = createEntityAdapter<CartProduct>();
 
 export const shoppingCartSlice = createSlice({
   name: "shoppingcart",
@@ -18,7 +20,7 @@ export const shoppingCartSlice = createSlice({
 
       shoppingcartAdapter.upsertOne(state, product);
     },
-    checkoutStart: (state, action) => { },
+    checkoutStart: (state) => { },
     checkoutSucceded: (state, action) => {
       shoppingcartAdapter.removeAll(state);
     },
@@ -31,11 +33,11 @@ export const {
   addToCart,
 } = shoppingCartSlice.actions;
 
-export const { selectAll } = shoppingcartAdapter.getSelectors(
+export const { selectAll } = shoppingcartAdapter.getSelectors<RootState>(
   (state) => state.shoppingcart
 );
 
-export const checkout = (products) => async (dispatch, getState) => {
+export const checkout = (products: CartProduct[]): AppThunk => async (dispatch, getState, patata) => {
   const { shoppingcart } = getState();
 
   dispatch(checkoutStart());

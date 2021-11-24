@@ -1,20 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { CartProduct } from "../cartProduct";
 
-const Product = ({ title, price, quantity }) => (
+const Product = ({ title, price, quantity }: CartProduct) => (
   <div>
     {title} - {price} €{quantity ? ` x ${quantity}` : null}
   </div>
 );
 
-function computeTotal(products) {
+function computeTotal(products: CartProduct[]) {
   return products.reduce((accuml, product) => {
     const value = product.price * product.quantity;
     return accuml + value;
   }, 0);
 }
 
-const ShoppingCart = ({ products, onCheckoutClicked }) => {
+const ShoppingCart = ({ products, onCheckoutClicked }: {products: CartProduct[], onCheckoutClicked: (products: CartProduct[]) => void}) => {
   const isEmpty = products.length === 0;
 
   return (
@@ -39,11 +38,6 @@ const ShoppingCart = ({ products, onCheckoutClicked }) => {
       </button>
     </div>
   );
-};
-
-ShoppingCart.propTypes = {
-  products: PropTypes.array,
-  onCheckoutClicked: PropTypes.func,
 };
 
 export default ShoppingCart;
