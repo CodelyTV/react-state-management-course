@@ -1,0 +1,45 @@
+import { render, screen } from "@testing-library/react";
+import ShoppingCart from "../components/ShoppingCart";
+
+describe("Cart should", () => {
+  test("warn on empty cart", async () => {
+    const products = [];
+    const total = "0.0";
+
+    render(
+      <ShoppingCart
+        products={products}
+        total={total}
+        onCheckoutClicked={jest.fn()}
+      />
+    );
+
+    expect(screen.getByText(/please add/i)).toBeDefined();
+  });
+
+  test("disable checkout button when empty", async () => {
+    const products = [];
+    const total = "0.0";
+
+    render(
+      <ShoppingCart
+        products={products}
+        total={total}
+        onCheckoutClicked={jest.fn()}
+      />
+    );
+
+    expect(screen.getByText(/checkout/i)).toBeDisabled();
+  });
+
+  test("show products added to the cart", async () => {
+    const products = [{ id: 1, title: "iPad", price: 100, quantity: 1 }];
+    const total = "100.0";
+
+    render(
+      <ShoppingCart products={products} total={total} checkout={jest.fn()} />
+    );
+
+    expect(screen.getByText(/ipad/i)).toBeDefined();
+  });
+});
